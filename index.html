@@ -216,10 +216,10 @@
     100% { transform: translate(0, 0); filter: hue-rotate(0deg); }
   }
 
-  /* --- Экран 3: Смена власти (видео) --- */
+  /* --- Экран 3: Видео ареста --- */
   #screenArrest { justify-content: center; }
 
-  /* --- Экран выбора: тёмный, кнопки по центру --- */
+  /* --- Экран 4: Тёмный экран с выбором --- */
   #screenChoice {
     background: #000;
     padding: 24px;
@@ -231,6 +231,7 @@
     font-style: italic;
     text-align: center;
     margin-bottom: 12px;
+    max-width: 340px;
   }
   .choices {
     display: flex;
@@ -249,7 +250,21 @@
   .choice-coop { border-color: #3a5a7a; box-shadow: 0 0 24px rgba(80, 140, 200, 0.25); }
   .choice-refuse { border-color: #7a3a3a; box-shadow: 0 0 24px rgba(200, 80, 80, 0.25); }
 
-  /* --- Экран доната --- */
+  /* --- Экран 5: Видео после выбора --- */
+  #screenVideoChoice { justify-content: center; }
+  .video-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 0; right: 0;
+    text-align: center;
+    color: #8a8a94;
+    font-size: 14px;
+    font-style: italic;
+    z-index: 3;
+    animation: pulse 1.5s infinite alternate;
+  }
+
+  /* --- Экран 6А: Донат --- */
   #screenDonate { padding: 24px; gap: 20px; background: #0a0a0f; }
   .donate-box {
     background: linear-gradient(180deg, #1a1a24 0%, #0f0f16 100%);
@@ -276,6 +291,15 @@
     border-color: #3a5a7a;
   }
 
+  /* --- Экран 6Б: Шаман --- */
+  #screenTicket {
+    background: #000; gap: 20px; padding: 24px;
+  }
+  .ticket-hint {
+    font-size: 17px; color: #d8c8a8; font-style: italic;
+    text-align: center; min-height: 40px;
+  }
+
   /* --- Финальные экраны --- */
   .final {
     text-align: center;
@@ -289,29 +313,6 @@
     font-family: -apple-system, sans-serif;
     background: rgba(20, 20, 28, 0.6);
     padding: 18px; border-radius: 12px;
-  }
-
-  /* --- Экран Шамана --- */
-  #screenTicket {
-    background: #000; gap: 20px; padding: 24px;
-  }
-  .ticket-hint {
-    font-size: 17px; color: #d8c8a8; font-style: italic;
-    text-align: center; min-height: 40px;
-  }
-
-  /* --- Вспомогательный класс: видео после выбора --- */
-  #screenVideoChoice { justify-content: center; }
-  .video-hint {
-    position: absolute;
-    bottom: 40px;
-    left: 0; right: 0;
-    text-align: center;
-    color: #8a8a94;
-    font-size: 14px;
-    font-style: italic;
-    z-index: 3;
-    animation: pulse 1.5s infinite alternate;
   }
 
   @media (max-height: 640px) {
@@ -357,7 +358,7 @@
     <div class="glitch" id="glitch"></div>
   </div>
 
-  <!-- ЭКРАН 3: ВИДЕО "ЛУКЕРЬЮ УВОДЯТ" -->
+  <!-- ЭКРАН 3: ВИДЕО АРЕСТА -->
   <div class="screen" id="screenArrest">
     <video class="fullscreen" id="videoArrest" src="lukerya-arrest.mp4" playsinline preload="auto" muted></video>
   </div>
@@ -371,9 +372,9 @@
     </div>
   </div>
 
-  <!-- ЭКРАН 5: ВИДЕО ВЫБОРА (cop-good / cop-bad) -->
+  <!-- ЭКРАН 5: ВИДЕО ПОСЛЕ ВЫБОРА -->
   <div class="screen" id="screenVideoChoice">
-    <video class="fullscreen" id="videoChoice" src="" playsinline preload="auto" muted></video>
+    <video class="fullscreen" id="videoChoice" playsinline preload="auto" muted></video>
     <div class="video-hint">Тапните, если видео не играет</div>
   </div>
 
@@ -428,7 +429,7 @@ function show(id) {
   $(id).classList.add('active');
 }
 
-// ============ АУДИО БАБКИ (с прогревом) ============
+// ============ АУДИО БАБКИ ============
 const angryAudio = new Audio('lukerya-angry.mp3');
 angryAudio.preload = 'auto';
 angryAudio.volume = 1.0;
@@ -437,7 +438,6 @@ let audioUnlocked = false;
 function unlockAudio() {
   if (audioUnlocked) return;
   audioUnlocked = true;
-  // "прогрев" — проигрываем беззвучно на 1 мс, чтобы разблокировать
   try {
     angryAudio.volume = 0;
     const p = angryAudio.play();
@@ -461,26 +461,11 @@ function playAngry() {
     angryAudio.currentTime = 0;
     angryAudio.volume = 1.0;
     const p = angryAudio.play();
-    if (p && p.catch) p.catch(err => {
-      console.warn('Не удалось проиграть звук:', err);
-      // fallback: синтез через Web Audio
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = 'sawtooth';
-        o.frequency.value = 180;
-        g.gain.value = 0.15;
-        o.connect(g).connect(ctx.destination);
-        o.start();
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-        o.stop(ctx.currentTime + 0.6);
-      } catch(e2) {}
-    });
+    if (p && p.catch) p.catch(err => { console.warn('audio error', err); });
   } catch(e) {}
 }
 
-// ============ ЭКРАН 1: Лукерья ============
+// ============ ЭКРАН 1 ============
 const videoIntro = $('videoIntro');
 const tapOverlay = $('tapOverlay');
 const startBtn = $('startBtn');
@@ -490,7 +475,7 @@ let introStarted = false;
 function startIntro() {
   if (introStarted) return;
   introStarted = true;
-  unlockAudio(); // разблокируем звук бабки при первом тапе
+  unlockAudio();
   tapOverlay.classList.add('hidden');
   videoIntro.muted = false;
   videoIntro.currentTime = 0;
@@ -524,7 +509,7 @@ startBtn.addEventListener('click', () => {
   startScanScene();
 });
 
-// ============ ЭКРАН 2: Сканер ============
+// ============ ЭКРАН 2: СКАНЕР ============
 const zone = $('zone');
 const scanSub = $('scanSubtitle');
 const progressWrap = $('progressWrap');
@@ -584,7 +569,6 @@ function endPress(e) {
   progressBar.style.width = '0%';
 
   if (held >= MIN_TAP && held < HOLD_TIME) {
-    // дёрнул раньше — крик бабки
     zone.classList.add('angry');
     flashRed.classList.add('active');
     if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
@@ -634,7 +618,7 @@ zone.addEventListener('mousedown', startPress);
 zone.addEventListener('mouseup', endPress);
 zone.addEventListener('mouseleave', e => { if (!scanDone && !scanProcessing) endPress(e); });
 
-// ============ Глитч-звук ============
+// ============ ГЛИТЧ-ЗВУК ============
 let audioCtx = null;
 function playGlitchSound() {
   try {
@@ -660,8 +644,9 @@ function playGlitchSound() {
   } catch (e) {}
 }
 
-// ============ ЭКРАН 3: Смена власти ============
+// ============ ЭКРАН 3: АРЕСТ ============
 const videoArrest = $('videoArrest');
+let arrestTimer = null;
 
 function startArrestScene() {
   videoArrest.currentTime = 0;
@@ -671,20 +656,22 @@ function startArrestScene() {
     videoArrest.muted = true;
     videoArrest.play();
   });
+
+  // страховка: если видео не закончилось, переходим к выбору через 25 секунд
+  if (arrestTimer) clearTimeout(arrestTimer);
+  arrestTimer = setTimeout(() => {
+    if ($('screenArrest').classList.contains('active')) {
+      show('screenChoice');
+    }
+  }, 25000);
 }
 
 videoArrest.addEventListener('ended', () => {
+  if (arrestTimer) clearTimeout(arrestTimer);
   show('screenChoice');
 });
 
-// страховка: если видео длинное или не ended
-setTimeout(() => {
-  if ($('screenArrest').classList.contains('active')) {
-    show('screenChoice');
-  }
-}, 25000);
-
-// ============ ЭКРАН 4: Выбор ============
+// ============ ЭКРАН 4: ВЫБОР ============
 $('coopBtn').addEventListener('click', () => {
   playChoiceVideo('cop-good.mp4', 'donate');
 });
@@ -693,39 +680,45 @@ $('refuseBtn').addEventListener('click', () => {
   playChoiceVideo('cop-bad.mp4', 'ticket');
 });
 
-// ============ ЭКРАН 5: Видео выбора ============
+// ============ ЭКРАН 5: ВИДЕО ПОСЛЕ ВЫБОРА ============
 const videoChoice = $('videoChoice');
 let choiceTarget = null;
+let choiceTimer = null;
 
 function playChoiceVideo(src, target) {
   choiceTarget = target;
   videoChoice.src = src;
   videoChoice.currentTime = 0;
   videoChoice.muted = false;
+  videoChoice.load();
   show('screenVideoChoice');
+
   const p = videoChoice.play();
   if (p && p.catch) p.catch(() => {
     videoChoice.muted = true;
     videoChoice.play();
   });
+
+  // страховка: если видео не закончилось за 25 секунд — переходим дальше
+  if (choiceTimer) clearTimeout(choiceTimer);
+  choiceTimer = setTimeout(() => {
+    if ($('screenVideoChoice').classList.contains('active')) {
+      finishChoiceVideo();
+    }
+  }, 25000);
 }
 
-videoChoice.addEventListener('ended', () => {
+function finishChoiceVideo() {
+  if (choiceTimer) clearTimeout(choiceTimer);
   if (choiceTarget === 'donate') show('screenDonate');
   else if (choiceTarget === 'ticket') show('screenTicket');
-});
+}
 
-// страховка на случай, если видео длинное или не ended
-setTimeout(() => {
-  if ($('screenVideoChoice').classList.contains('active')) {
-    if (choiceTarget === 'donate') show('screenDonate');
-    else if (choiceTarget === 'ticket') show('screenTicket');
-  }
-}, 25000);
+videoChoice.addEventListener('ended', finishChoiceVideo);
 
 // тап по видео выбора — если не играет, запускаем вручную
 $('screenVideoChoice').addEventListener('click', () => {
-  if (videoChoice.paused) {
+  if (videoChoice.paused && choiceTarget) {
     videoChoice.muted = false;
     videoChoice.play();
   }
@@ -742,6 +735,8 @@ function restart() {
   scanProcessing = false;
   audioUnlocked = false;
   choiceTarget = null;
+  if (arrestTimer) clearTimeout(arrestTimer);
+  if (choiceTimer) clearTimeout(choiceTimer);
 
   try { angryAudio.pause(); angryAudio.currentTime = 0; } catch(e) {}
   try { videoIntro.pause(); videoIntro.currentTime = 0; } catch(e) {}
