@@ -15,11 +15,7 @@
     overflow: hidden;
     position: fixed;
   }
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  body { display: flex; align-items: center; justify-content: center; }
 
   .stage {
     position: relative;
@@ -30,7 +26,6 @@
     background: #000;
   }
 
-  /* --- Экраны --- */
   .screen {
     position: absolute;
     inset: 0;
@@ -71,10 +66,7 @@
     font-style: italic;
     text-align: center;
     min-height: 20px;
-    transition: opacity 0.3s;
   }
-
-  /* Тап-зона для запуска видео */
   .tap-overlay {
     position: absolute;
     inset: 0;
@@ -82,7 +74,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.65);
     color: #e8dcc8;
     font-size: 18px;
     font-style: italic;
@@ -136,14 +128,8 @@
     background: rgba(20, 14, 10, 0.6);
     z-index: 2;
   }
-  .scan-zone.pressing {
-    border-color: #b88a4a;
-    box-shadow: 0 0 60px rgba(255, 180, 80, 0.4);
-  }
-  .scan-zone.success {
-    border-color: #7aaa8a;
-    box-shadow: 0 0 60px rgba(120, 200, 150, 0.5);
-  }
+  .scan-zone.pressing { border-color: #b88a4a; box-shadow: 0 0 60px rgba(255, 180, 80, 0.4); }
+  .scan-zone.success { border-color: #7aaa8a; box-shadow: 0 0 60px rgba(120, 200, 150, 0.5); }
   .scan-zone.angry {
     border-color: #a83a3a;
     box-shadow: 0 0 50px rgba(200, 60, 60, 0.6);
@@ -155,70 +141,45 @@
     75% { transform: translateX(8px); }
   }
   .fingerprint {
-    width: 130px;
-    height: 130px;
-    opacity: 0.4;
-    transition: opacity 0.3s;
+    width: 130px; height: 130px;
+    opacity: 0.4; transition: opacity 0.3s;
     stroke: #b89060;
   }
   .scan-zone.pressing .fingerprint { opacity: 0.8; }
   .scan-zone.success .fingerprint { opacity: 1; stroke: #90c8a0; }
 
   .scan-line {
-    position: absolute;
-    left: 12%;
-    right: 12%;
+    position: absolute; left: 12%; right: 12%;
     height: 2px;
     background: linear-gradient(90deg, transparent, #ffb84a, transparent);
-    border-radius: 2px;
-    opacity: 0;
-    top: 50%;
+    border-radius: 2px; opacity: 0; top: 50%;
     filter: blur(1px);
   }
-  .scan-zone.pressing .scan-line {
-    opacity: 1;
-    animation: scan 1.2s ease-in-out infinite;
-  }
+  .scan-zone.pressing .scan-line { opacity: 1; animation: scan 1.2s ease-in-out infinite; }
   @keyframes scan {
     0%, 100% { top: 22%; }
     50% { top: 78%; }
   }
 
   .progress-wrap {
-    width: 100%;
-    max-width: 260px;
-    height: 4px;
-    background: #1a1410;
-    border-radius: 4px;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 2;
+    width: 100%; max-width: 260px; height: 4px;
+    background: #1a1410; border-radius: 4px; overflow: hidden;
+    opacity: 0; transition: opacity 0.3s; z-index: 2;
   }
   .progress-wrap.active { opacity: 1; }
   .progress-bar {
-    height: 100%;
-    width: 0%;
+    height: 100%; width: 0%;
     background: linear-gradient(90deg, #6a4a2a, #ffb84a);
     transition: width 0.1s linear;
   }
-
   .scan-subtitle {
-    font-size: 15px;
-    color: #d8c8a8;
-    font-style: italic;
-    text-align: center;
-    min-height: 44px;
-    max-width: 340px;
-    z-index: 2;
-    padding: 0 16px;
+    font-size: 15px; color: #d8c8a8; font-style: italic;
+    text-align: center; min-height: 44px; max-width: 340px;
+    z-index: 2; padding: 0 16px;
   }
   .scan-subtitle.loud {
-    color: #ff8a6a;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    letter-spacing: 1px;
+    color: #ff8a6a; font-style: normal; font-weight: bold;
+    font-size: 18px; letter-spacing: 1px;
     animation: pulse 0.5s infinite alternate;
   }
   @keyframes pulse {
@@ -226,40 +187,26 @@
     to { opacity: 1; text-shadow: 0 0 20px rgba(255, 100, 60, 0.8); }
   }
 
-  /* Красная вспышка */
   .flash-red {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: radial-gradient(circle, rgba(200, 40, 40, 0.55) 0%, rgba(120, 0, 0, 0.4) 60%, transparent 100%);
-    pointer-events: none;
-    opacity: 0;
-    z-index: 10;
+    pointer-events: none; opacity: 0; z-index: 10;
   }
-  .flash-red.active {
-    animation: flash 0.7s ease-out;
-  }
+  .flash-red.active { animation: flash 0.7s ease-out; }
   @keyframes flash {
     0% { opacity: 0; }
     15% { opacity: 1; }
     100% { opacity: 0; }
   }
 
-  /* Глитч (помехи) */
   .glitch {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    z-index: 20;
+    position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: 20;
     background:
       repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0px, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 3px),
       repeating-linear-gradient(90deg, rgba(255,0,0,0.06) 0px, rgba(0,255,0,0.06) 2px, rgba(0,0,255,0.06) 4px, transparent 6px);
     mix-blend-mode: screen;
   }
-  .glitch.active {
-    animation: glitchAnim 1.4s steps(3) infinite;
-    opacity: 1;
-  }
+  .glitch.active { animation: glitchAnim 1.4s steps(3) infinite; opacity: 1; }
   @keyframes glitchAnim {
     0% { transform: translate(0, 0); filter: hue-rotate(0deg); }
     20% { transform: translate(-6px, 3px); filter: hue-rotate(40deg); }
@@ -270,23 +217,25 @@
   }
 
   /* --- Экран 3: Смена власти (видео) --- */
-  #screenArrest { justify-content: flex-end; }
-  #screenArrest .arrest-bottom {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    padding: 24px 20px 40px;
-    background: linear-gradient(to top, #000 0%, #000 50%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    transition: opacity 0.5s;
+  #screenArrest { justify-content: center; }
+
+  /* --- Экран выбора: тёмный, кнопки по центру --- */
+  #screenChoice {
+    background: #000;
+    padding: 24px;
+    gap: 20px;
+  }
+  .choice-title {
+    font-size: 20px;
+    color: #d8c8a8;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 12px;
   }
   .choices {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     width: 100%;
     max-width: 340px;
   }
@@ -294,11 +243,11 @@
     font-style: normal;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 500;
-    padding: 18px;
+    padding: 20px;
     font-size: 16px;
   }
-  .choice-coop { border-color: #3a5a7a; box-shadow: 0 0 24px rgba(80, 140, 200, 0.2); }
-  .choice-refuse { border-color: #7a3a3a; box-shadow: 0 0 24px rgba(200, 80, 80, 0.2); }
+  .choice-coop { border-color: #3a5a7a; box-shadow: 0 0 24px rgba(80, 140, 200, 0.25); }
+  .choice-refuse { border-color: #7a3a3a; box-shadow: 0 0 24px rgba(200, 80, 80, 0.25); }
 
   /* --- Экран доната --- */
   #screenDonate { padding: 24px; gap: 20px; background: #0a0a0f; }
@@ -307,78 +256,62 @@
     border: 1px solid #2a3a5a;
     border-radius: 16px;
     padding: 28px 24px;
-    width: 100%;
-    max-width: 360px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
+    width: 100%; max-width: 360px;
+    display: flex; flex-direction: column; gap: 16px; align-items: center;
   }
   .donate-label {
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: #6a7a9a;
-    text-transform: uppercase;
-    font-family: monospace;
+    font-size: 12px; letter-spacing: 2px; color: #6a7a9a;
+    text-transform: uppercase; font-family: monospace;
   }
   .donate-amount {
-    font-size: 52px;
-    color: #e8e8e8;
-    font-family: -apple-system, sans-serif;
-    font-weight: 700;
+    font-size: 52px; color: #e8e8e8;
+    font-family: -apple-system, sans-serif; font-weight: 700;
   }
   .donate-purpose {
-    font-size: 13px;
-    color: #8a9aaa;
-    text-align: center;
-    line-height: 1.5;
-    font-family: -apple-system, sans-serif;
+    font-size: 13px; color: #8a9aaa; text-align: center;
+    line-height: 1.5; font-family: -apple-system, sans-serif;
   }
   .donate-box button {
-    width: 100%;
-    font-family: -apple-system, sans-serif;
-    font-style: normal;
+    width: 100%; font-family: -apple-system, sans-serif; font-style: normal;
     border-color: #3a5a7a;
   }
 
   /* --- Финальные экраны --- */
   .final {
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    align-items: center;
-    padding: 32px 24px;
-    max-width: 480px;
+    display: flex; flex-direction: column; gap: 22px; align-items: center;
+    padding: 32px 24px; max-width: 480px;
   }
-  .final-title {
-    font-size: 26px;
-    color: #90c8a0;
-    font-style: italic;
-  }
+  .final-title { font-size: 26px; color: #90c8a0; font-style: italic; }
   .final-title.bad { color: #d89090; }
   .final-text {
-    font-size: 15px;
-    color: #b8b8c2;
-    line-height: 1.7;
+    font-size: 15px; color: #b8b8c2; line-height: 1.7;
     font-family: -apple-system, sans-serif;
     background: rgba(20, 20, 28, 0.6);
-    padding: 18px;
-    border-radius: 12px;
+    padding: 18px; border-radius: 12px;
   }
 
-  /* Тёмная плашка для экрана "скачать билет" */
+  /* --- Экран Шамана --- */
   #screenTicket {
-    background: #000;
-    gap: 20px;
-    padding: 24px;
+    background: #000; gap: 20px; padding: 24px;
   }
   .ticket-hint {
-    font-size: 17px;
-    color: #d8c8a8;
-    font-style: italic;
+    font-size: 17px; color: #d8c8a8; font-style: italic;
+    text-align: center; min-height: 40px;
+  }
+
+  /* --- Вспомогательный класс: видео после выбора --- */
+  #screenVideoChoice { justify-content: center; }
+  .video-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 0; right: 0;
     text-align: center;
-    min-height: 40px;
+    color: #8a8a94;
+    font-size: 14px;
+    font-style: italic;
+    z-index: 3;
+    animation: pulse 1.5s infinite alternate;
   }
 
   @media (max-height: 640px) {
@@ -391,21 +324,17 @@
 
 <div class="stage">
 
-  <!-- ========== ЭКРАН 1: ЛУКЕРЬЯ ========== -->
+  <!-- ЭКРАН 1: ЛУКЕРЬЯ -->
   <div class="screen active" id="screenIntro">
     <video class="fullscreen" id="videoIntro" src="lukerya-intro.mp4" playsinline preload="auto" muted></video>
-
-    <div class="tap-overlay" id="tapOverlay">
-      <div>Тапните, чтобы начать</div>
-    </div>
-
+    <div class="tap-overlay" id="tapOverlay"><div>Тапните, чтобы начать</div></div>
     <div class="intro-bottom">
       <div class="intro-hint" id="introHint"></div>
       <button id="startBtn" disabled>Начать игру</button>
     </div>
   </div>
 
-  <!-- ========== ЭКРАН 2: СКАНЕР ========== -->
+  <!-- ЭКРАН 2: СКАНЕР -->
   <div class="screen" id="screenScan">
     <div class="scan-title">Приложите палец к сканеру</div>
     <div class="scan-zone" id="zone">
@@ -422,27 +351,33 @@
       </svg>
       <div class="scan-line"></div>
     </div>
-    <div class="progress-wrap" id="progressWrap">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <div class="progress-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
     <div class="scan-subtitle" id="scanSubtitle">Крепко прижмите палец и держите</div>
-
     <div class="flash-red" id="flashRed"></div>
     <div class="glitch" id="glitch"></div>
   </div>
 
-  <!-- ========== ЭКРАН 3: СМЕНА ВЛАСТИ ========== -->
+  <!-- ЭКРАН 3: ВИДЕО "ЛУКЕРЬЮ УВОДЯТ" -->
   <div class="screen" id="screenArrest">
     <video class="fullscreen" id="videoArrest" src="lukerya-arrest.mp4" playsinline preload="auto" muted></video>
-    <div class="arrest-bottom">
-      <div class="choices" id="choices" style="display:none">
-        <button class="choice-coop" id="coopBtn">Буду сотрудничать</button>
-        <button class="choice-refuse" id="refuseBtn">Не буду сотрудничать</button>
-      </div>
+  </div>
+
+  <!-- ЭКРАН 4: ТЁМНЫЙ ЭКРАН С ВЫБОРОМ -->
+  <div class="screen" id="screenChoice">
+    <div class="choice-title">Сотрудничать со следствием будем?</div>
+    <div class="choices">
+      <button class="choice-coop" id="coopBtn">Буду сотрудничать</button>
+      <button class="choice-refuse" id="refuseBtn">Не буду сотрудничать</button>
     </div>
   </div>
 
-  <!-- ========== ЭКРАН 4А: ДОНАТ ========== -->
+  <!-- ЭКРАН 5: ВИДЕО ВЫБОРА (cop-good / cop-bad) -->
+  <div class="screen" id="screenVideoChoice">
+    <video class="fullscreen" id="videoChoice" src="" playsinline preload="auto" muted></video>
+    <div class="video-hint">Тапните, если видео не играет</div>
+  </div>
+
+  <!-- ЭКРАН 6А: ДОНАТ -->
   <div class="screen" id="screenDonate">
     <div class="donate-box">
       <div class="donate-label">Добровольный взнос</div>
@@ -452,13 +387,13 @@
     </div>
   </div>
 
-  <!-- ========== ЭКРАН 4Б: ШАМАН ========== -->
+  <!-- ЭКРАН 6Б: ШАМАН -->
   <div class="screen" id="screenTicket">
     <div class="ticket-hint">Экран затемнён.<br>Судьба ваша решена.</div>
     <button id="ticketBtn">Скачать билет на концерт певца Шамана</button>
   </div>
 
-  <!-- ========== ФИНАЛ A ========== -->
+  <!-- ФИНАЛ A -->
   <div class="screen" id="screenFinalA">
     <div class="final">
       <div class="final-title">Дело закрыто</div>
@@ -471,7 +406,7 @@
     </div>
   </div>
 
-  <!-- ========== ФИНАЛ Б ========== -->
+  <!-- ФИНАЛ Б -->
   <div class="screen" id="screenFinalB">
     <div class="final">
       <div class="final-title bad">Приговор окончательный</div>
@@ -486,12 +421,63 @@
 </div>
 
 <script>
-// ============ Утилиты ============
 const $ = id => document.getElementById(id);
-const screens = ['screenIntro','screenScan','screenArrest','screenDonate','screenTicket','screenFinalA','screenFinalB'];
+const screens = ['screenIntro','screenScan','screenArrest','screenChoice','screenVideoChoice','screenDonate','screenTicket','screenFinalA','screenFinalB'];
 function show(id) {
   screens.forEach(s => $(s).classList.remove('active'));
   $(id).classList.add('active');
+}
+
+// ============ АУДИО БАБКИ (с прогревом) ============
+const angryAudio = new Audio('lukerya-angry.mp3');
+angryAudio.preload = 'auto';
+angryAudio.volume = 1.0;
+
+let audioUnlocked = false;
+function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  // "прогрев" — проигрываем беззвучно на 1 мс, чтобы разблокировать
+  try {
+    angryAudio.volume = 0;
+    const p = angryAudio.play();
+    if (p && p.then) {
+      p.then(() => {
+        angryAudio.pause();
+        angryAudio.currentTime = 0;
+        angryAudio.volume = 1.0;
+      }).catch(() => { angryAudio.volume = 1.0; });
+    } else {
+      angryAudio.pause();
+      angryAudio.currentTime = 0;
+      angryAudio.volume = 1.0;
+    }
+  } catch(e) { angryAudio.volume = 1.0; }
+}
+
+function playAngry() {
+  try {
+    angryAudio.pause();
+    angryAudio.currentTime = 0;
+    angryAudio.volume = 1.0;
+    const p = angryAudio.play();
+    if (p && p.catch) p.catch(err => {
+      console.warn('Не удалось проиграть звук:', err);
+      // fallback: синтез через Web Audio
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sawtooth';
+        o.frequency.value = 180;
+        g.gain.value = 0.15;
+        o.connect(g).connect(ctx.destination);
+        o.start();
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        o.stop(ctx.currentTime + 0.6);
+      } catch(e2) {}
+    });
+  } catch(e) {}
 }
 
 // ============ ЭКРАН 1: Лукерья ============
@@ -499,23 +485,20 @@ const videoIntro = $('videoIntro');
 const tapOverlay = $('tapOverlay');
 const startBtn = $('startBtn');
 const introHint = $('introHint');
-
 let introStarted = false;
 
 function startIntro() {
   if (introStarted) return;
   introStarted = true;
+  unlockAudio(); // разблокируем звук бабки при первом тапе
   tapOverlay.classList.add('hidden');
-
   videoIntro.muted = false;
   videoIntro.currentTime = 0;
   const p = videoIntro.play();
   if (p && p.catch) p.catch(() => {
-    // если браузер всё ещё блокирует — оставляем muted, но продолжаем
     videoIntro.muted = true;
     videoIntro.play();
   });
-
   introHint.textContent = 'Внимайте словам ведуньи...';
   startBtn.disabled = true;
 }
@@ -525,11 +508,11 @@ videoIntro.addEventListener('ended', () => {
   startBtn.disabled = false;
 });
 
-// на случай, если видео не загрузилось или зависло — активируем кнопку через 22 сек
 setTimeout(() => {
-  if (!startBtn.disabled) return;
-  startBtn.disabled = false;
-  introHint.textContent = 'Ведунья готова говорить с вами.';
+  if (introStarted && startBtn.disabled) {
+    startBtn.disabled = false;
+    introHint.textContent = 'Ведунья готова говорить с вами.';
+  }
 }, 22000);
 
 tapOverlay.addEventListener('click', startIntro);
@@ -549,15 +532,12 @@ const progressBar = $('progressBar');
 const flashRed = $('flashRed');
 const glitch = $('glitch');
 
-const HOLD_TIME = 4000;      // сколько держать (мс)
-const MIN_TAP = 200;         // минимальное касание
+const HOLD_TIME = 4000;
+const MIN_TAP = 200;
 let pressStart = 0;
 let progressTimer = null;
 let scanDone = false;
 let scanProcessing = false;
-let angryPlayed = false;
-const angryAudio = new Audio('lukerya-angry.mp3');
-angryAudio.volume = 1.0;
 
 function startScanScene() {
   scanDone = false;
@@ -568,6 +548,7 @@ function startScanScene() {
   progressWrap.classList.remove('active');
   zone.classList.remove('pressing','success','angry');
   glitch.classList.remove('active');
+  flashRed.classList.remove('active');
 }
 
 function startPress(e) {
@@ -603,19 +584,13 @@ function endPress(e) {
   progressBar.style.width = '0%';
 
   if (held >= MIN_TAP && held < HOLD_TIME) {
-    // дёрнул раньше — злимся
+    // дёрнул раньше — крик бабки
     zone.classList.add('angry');
     flashRed.classList.add('active');
     if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
     scanSub.className = 'scan-subtitle loud';
     scanSub.textContent = 'ПАЛЕЦ НЕ УБИРАЙ!';
-
-    if (!angryPlayed) {
-      angryPlayed = true;
-      angryAudio.currentTime = 0;
-      angryAudio.play().catch(() => {});
-      setTimeout(() => { angryPlayed = false; }, 2500); // не даём зацикливать
-    }
+    playAngry();
 
     setTimeout(() => zone.classList.remove('angry'), 800);
     setTimeout(() => flashRed.classList.remove('active'), 700);
@@ -624,7 +599,7 @@ function endPress(e) {
         scanSub.className = 'scan-subtitle';
         scanSub.textContent = 'Крепко прижмите палец и держите';
       }
-    }, 1600);
+    }, 1800);
   }
 }
 
@@ -637,7 +612,6 @@ function onScanComplete() {
   scanSub.textContent = 'Идёт обработка данных...';
   if (navigator.vibrate) navigator.vibrate([60, 40, 120]);
 
-  // через 1.8 сек — внезапные помехи
   setTimeout(() => {
     glitch.classList.add('active');
     playGlitchSound();
@@ -660,7 +634,7 @@ zone.addEventListener('mousedown', startPress);
 zone.addEventListener('mouseup', endPress);
 zone.addEventListener('mouseleave', e => { if (!scanDone && !scanProcessing) endPress(e); });
 
-// ============ Глитч-звук (Web Audio) ============
+// ============ Глитч-звук ============
 let audioCtx = null;
 function playGlitchSound() {
   try {
@@ -670,7 +644,6 @@ function playGlitchSound() {
     const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
-      // случайный шум + резкие выбросы
       data[i] = (Math.random() * 2 - 1) * (Math.random() > 0.995 ? 3 : 0.6);
     }
     const source = audioCtx.createBufferSource();
@@ -684,15 +657,13 @@ function playGlitchSound() {
     source.connect(filter).connect(gain).connect(audioCtx.destination);
     source.start();
     source.stop(audioCtx.currentTime + duration);
-  } catch (e) { /* тихо игнорируем */ }
+  } catch (e) {}
 }
 
 // ============ ЭКРАН 3: Смена власти ============
 const videoArrest = $('videoArrest');
-const choices = $('choices');
 
 function startArrestScene() {
-  choices.style.display = 'none';
   videoArrest.currentTime = 0;
   videoArrest.muted = false;
   const p = videoArrest.play();
@@ -703,46 +674,79 @@ function startArrestScene() {
 }
 
 videoArrest.addEventListener('ended', () => {
-  choices.style.display = 'flex';
+  show('screenChoice');
+});
+
+// страховка: если видео длинное или не ended
+setTimeout(() => {
+  if ($('screenArrest').classList.contains('active')) {
+    show('screenChoice');
+  }
+}, 25000);
+
+// ============ ЭКРАН 4: Выбор ============
+$('coopBtn').addEventListener('click', () => {
+  playChoiceVideo('cop-good.mp4', 'donate');
+});
+
+$('refuseBtn').addEventListener('click', () => {
+  playChoiceVideo('cop-bad.mp4', 'ticket');
+});
+
+// ============ ЭКРАН 5: Видео выбора ============
+const videoChoice = $('videoChoice');
+let choiceTarget = null;
+
+function playChoiceVideo(src, target) {
+  choiceTarget = target;
+  videoChoice.src = src;
+  videoChoice.currentTime = 0;
+  videoChoice.muted = false;
+  show('screenVideoChoice');
+  const p = videoChoice.play();
+  if (p && p.catch) p.catch(() => {
+    videoChoice.muted = true;
+    videoChoice.play();
+  });
+}
+
+videoChoice.addEventListener('ended', () => {
+  if (choiceTarget === 'donate') show('screenDonate');
+  else if (choiceTarget === 'ticket') show('screenTicket');
 });
 
 // страховка на случай, если видео длинное или не ended
 setTimeout(() => {
-  if ($('screenArrest').classList.contains('active')) {
-    choices.style.display = 'flex';
+  if ($('screenVideoChoice').classList.contains('active')) {
+    if (choiceTarget === 'donate') show('screenDonate');
+    else if (choiceTarget === 'ticket') show('screenTicket');
   }
-}, 20000);
+}, 25000);
 
-$('coopBtn').addEventListener('click', () => {
-  videoArrest.pause();
-  show('screenDonate');
+// тап по видео выбора — если не играет, запускаем вручную
+$('screenVideoChoice').addEventListener('click', () => {
+  if (videoChoice.paused) {
+    videoChoice.muted = false;
+    videoChoice.play();
+  }
 });
 
-$('refuseBtn').addEventListener('click', () => {
-  videoArrest.pause();
-  show('screenTicket');
-});
-
-// ============ ЭКРАН 4А: Донат ============
-$('donateBtn').addEventListener('click', () => {
-  show('screenFinalA');
-});
-
-// ============ ЭКРАН 4Б: Шаман ============
-$('ticketBtn').addEventListener('click', () => {
-  show('screenFinalB');
-});
+// ============ ДОНАТ И ШАМАН ============
+$('donateBtn').addEventListener('click', () => show('screenFinalA'));
+$('ticketBtn').addEventListener('click', () => show('screenFinalB'));
 
 // ============ РЕСТАРТ ============
 function restart() {
   introStarted = false;
-  angryPlayed = false;
   scanDone = false;
   scanProcessing = false;
+  audioUnlocked = false;
+  choiceTarget = null;
 
   try { angryAudio.pause(); angryAudio.currentTime = 0; } catch(e) {}
   try { videoIntro.pause(); videoIntro.currentTime = 0; } catch(e) {}
   try { videoArrest.pause(); videoArrest.currentTime = 0; } catch(e) {}
+  try { videoChoice.pause(); videoChoice.currentTime = 0; } catch(e) {}
 
   tapOverlay.classList.remove('hidden');
   startBtn.disabled = true;
@@ -754,7 +758,6 @@ function restart() {
   zone.classList.remove('pressing','success','angry');
   glitch.classList.remove('active');
   flashRed.classList.remove('active');
-  choices.style.display = 'none';
 
   show('screenIntro');
 }
@@ -762,7 +765,6 @@ function restart() {
 $('restartA').addEventListener('click', restart);
 $('restartB').addEventListener('click', restart);
 
-// прелоад видео, чтобы не было задержек
 window.addEventListener('load', () => {
   try { videoIntro.load(); videoArrest.load(); } catch(e) {}
 });
