@@ -295,10 +295,6 @@
   #screenTicket {
     background: #000; gap: 20px; padding: 24px;
   }
-  .ticket-hint {
-    font-size: 17px; color: #d8c8a8; font-style: italic;
-    text-align: center; min-height: 40px;
-  }
 
   /* --- Финальные экраны --- */
   .final {
@@ -306,8 +302,6 @@
     display: flex; flex-direction: column; gap: 22px; align-items: center;
     padding: 32px 24px; max-width: 480px;
   }
-  .final-title { font-size: 26px; color: #90c8a0; font-style: italic; }
-  .final-title.bad { color: #d89090; }
   .final-text {
     font-size: 15px; color: #b8b8c2; line-height: 1.7;
     font-family: -apple-system, sans-serif;
@@ -390,14 +384,12 @@
 
   <!-- ЭКРАН 6Б: ШАМАН -->
   <div class="screen" id="screenTicket">
-    <div class="ticket-hint">Экран затемнён.<br>Судьба ваша решена.</div>
-    <button id="ticketBtn">Скачать билет на концерт певца Шамана</button>
+    <button id="ticketBtn">Получить билет на концерт</button>
   </div>
 
   <!-- ФИНАЛ A -->
   <div class="screen" id="screenFinalA">
     <div class="final">
-      <div class="final-title">Дело закрыто</div>
       <div class="final-text">
         УВД города Торжок сердечно благодарит вас за сотрудничество с правоохранительными органами
         и дарит сертификат на УДО (условно-досрочное освобождение).<br><br>
@@ -410,7 +402,6 @@
   <!-- ФИНАЛ Б -->
   <div class="screen" id="screenFinalB">
     <div class="final">
-      <div class="final-title bad">Приговор окончательный</div>
       <div class="final-text">
         Ближайший концерт певца Шамана состоится <b>12 декабря 2028 года</b> в г. Воркута.<br><br>
         Ваша явка обязательна и обжалованию не подлежит.
@@ -657,7 +648,6 @@ function startArrestScene() {
     videoArrest.play();
   });
 
-  // страховка: если видео не закончилось, переходим к выбору через 25 секунд
   if (arrestTimer) clearTimeout(arrestTimer);
   arrestTimer = setTimeout(() => {
     if ($('screenArrest').classList.contains('active')) {
@@ -699,7 +689,6 @@ function playChoiceVideo(src, target) {
     videoChoice.play();
   });
 
-  // страховка: если видео не закончилось за 25 секунд — переходим дальше
   if (choiceTimer) clearTimeout(choiceTimer);
   choiceTimer = setTimeout(() => {
     if ($('screenVideoChoice').classList.contains('active')) {
@@ -716,7 +705,6 @@ function finishChoiceVideo() {
 
 videoChoice.addEventListener('ended', finishChoiceVideo);
 
-// тап по видео выбора — если не играет, запускаем вручную
 $('screenVideoChoice').addEventListener('click', () => {
   if (videoChoice.paused && choiceTarget) {
     videoChoice.muted = false;
